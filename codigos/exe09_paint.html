@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>paint 2.0</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas width="600" height="400"></canvas>
+        <script>
+            function desenhaQuadrado(x, y, tamanho, cor){
+                pincel.fillStyle = cor;
+                pincel.fillRect(x, y, tamanho, tamanho);
+                pincel.fill();
+            }
+            function desenhaCirculo(x, y, raio, cor){
+                pincel.fillStyle = cor;
+                pincel.beginPath();
+                pincel.arc(x, y, raio, 0, 2 * Math.PI);
+                pincel.fill();
+            }
+
+            function desenhaPaleta(){
+                desenhaQuadrado(vermelho, yPaleta, tamanhoQuadrado, 'red');
+                desenhaQuadrado(verde, yPaleta, tamanhoQuadrado, 'green');
+                desenhaQuadrado(azul, yPaleta, tamanhoQuadrado, 'blue');
+            }
+
+            function escolheCor(evento){
+                var x = evento.pageX - tela.offsetLeft;
+                var y = evento.pageY - tela.offsetTop;
+
+                if((y >= yPaleta) && (y < 50) && (x >= 0) && (x < 50)){
+                    corAtual = 'red';
+                } else if ((y >= yPaleta) && (y < 50) && (x >= 50) && (x < 100)){
+                    corAtual = 'green';
+                } else if ((y >= yPaleta) && (y < 50) && (x >= 100) && (x < 150)){
+                    corAtual = 'blue';
+                }
+            }
+
+            function movimentoMouse(evento){
+                var x = evento.pageX - tela.offsetLeft;
+                var y = evento.pageY - tela.offsetTop;
+                if (desenha && areaDesenho(x, y)){
+                    desenhaCirculo(x, y, 5, corAtual);
+                }
+            }
+
+            function areaDesenho(x, y){
+                if ((x >= 0 && x < 3*tamanhoQuadrado) && (y >= 0 && y < tamanhoQuadrado)){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function habilitaDesenho(){
+                desenha = true;
+            }
+
+            function desabilitaDesenho(){
+                desenha = false;
+            }
+
+
+            let tela = document.querySelector('canvas');
+            let pincel = tela.getContext('2d');
+
+            let yPaleta = 0;
+            var vermelho = 0;
+            var verde = 50;
+            var azul = 100;
+            let tamanhoQuadrado = 50;
+            var desenha = false;
+            var corAtual = 'blue';
+
+            desenhaPaleta();
+            
+            tela.onmousemove = movimentoMouse;
+            tela.onmousedown = habilitaDesenho;
+            tela.onmouseup = desabilitaDesenho;
+            tela.onclick = escolheCor;
+        </script>
+    </body>
+</html>

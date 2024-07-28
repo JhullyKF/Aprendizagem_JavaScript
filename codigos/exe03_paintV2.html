@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gerar circulos</title>
+    <meta charset="UTF-8" />
+  </head>
+  
+  <body>
+      <canvas height="400" width="600"></canvas>
+      <script>
+        
+        let tela = document.querySelector('canvas');
+        let pincel = tela.getContext('2d');
+        let cor = ['blue', 'red', 'green'];
+        let i = 0;
+        let desenha = false
+        pincel.fillStyle = 'gray';
+        pincel.fillRect(0, 0, 600, 400);
+        
+        
+        
+        tela.onmousemove = function(event){
+          if(desenha){
+            let x = event.pageX - tela.offsetLeft
+            let y = event.pageY - tela.offsetTop
+            
+            pincel.fillStyle = 'blue'
+            pincel.beginPath()
+            pincel.fillStyle = cor[i];
+            pincel.beginPath();
+            pincel.arc(x, y, 10, 0, 2 * 3.14);
+            pincel.fill();
+          }
+            
+        }
+        
+        tela.onmousedown = function(){
+          desenha = true
+        }
+        
+        tela.onmouseup = function(){
+          desenha = false
+        }
+        
+        tela.oncontextmenu = function(){
+          if(i < 2){
+            i++;
+          } else {
+            i = 0;
+          }
+          
+          return;
+          
+        }
+      
+      </script>
+  </body>
+</html>

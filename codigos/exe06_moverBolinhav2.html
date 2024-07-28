@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Mover bolinha com o teclado</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas width="600" height="400"></canvas>
+
+        <script>
+            function limpaTela(){
+                pincel.clearRect(0, 0, 600, 400);
+            }
+
+            function atualizaTela(){
+                limpaTela();
+                desenhaCirculo(x, y, 10);
+            }
+
+            function leTeclado(evento){
+                let direcao = evento.keyCode;
+                if(direcao == cima){
+                    y += incremento;
+                } else if(direcao == baixo){
+                    y -= incremento;
+                } else if(direcao == esquerda){
+                    x -= incremento;
+                } else if(direcao == direita){
+                    x += incremento;
+                }
+            }
+            
+            let tela = document.querySelector('canvas');
+            let pincel = tela.getContext('2d');
+
+            let x = 20;
+            let y = 20;
+
+            //codigos do teclado
+            let esquerda = 37;
+            let cima = 40;
+            let direita = 39;
+            let baixo = 38;
+
+            let incremento = 10;
+
+            pincel.fillStyle = "lightgray";
+            pincel.fillRect(0, 0, 600, 400);
+
+            function desenhaCirculo(x, y, raio){
+                pincel.fillStyle = 'pink';
+                pincel.beginPath();
+                pincel.arc(x, y, raio, 0, 2 * Math.PI);
+                pincel.fill();
+            }
+
+            document.onkeydown = leTeclado;
+            setInterval(atualizaTela, 20);
+
+        </script>
+    </body>
+</html>
